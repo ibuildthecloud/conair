@@ -42,6 +42,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/acorn-io/baaah v0.0.0-20231009165317-af2b68361b8a h1:0bHfiYUw4ojXCUfGHUPmRewrgJ/EpLQ4BaR4yEy8BC4=
 github.com/acorn-io/baaah v0.0.0-20231009165317-af2b68361b8a/go.mod h1:1KSGxZt0E2MDedJESKUUYtxCwsJ3A+xZiw2QD8cVbjU=
+github.com/acorn-io/cmd v0.0.0-20240101193821-66a32bc6b939 h1:wTD+GlRD4zlJb5hu7BpR/bmpvPybHXQbn4JYVt23kOQ=
+github.com/acorn-io/cmd v0.0.0-20240101193821-66a32bc6b939/go.mod h1:J0xhtXVfrJk3Fz1HYz3AoJ/ON9gaHu/baTkqOvywcfo=
 github.com/bep/godartsass v0.16.0 h1:nTpenrZBQjVSjLkCw3AgnYmBB2czauTJa4BLLv448qg=
 github.com/bep/godartsass v0.16.0/go.mod h1:6LvK9RftsXMxGfsA0LDV12AGc4Jylnu6NgHL+Q5/pE8=
 github.com/bep/golibsass v1.1.0 h1:pjtXr00IJZZaOdfryNa9wARTB3Q0BmxC3/V1KNcgyTw=

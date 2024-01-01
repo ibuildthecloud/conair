@@ -2,10 +2,8 @@ module github.com/ibuildthecloud/conair
 
 go 1.21.5
 
-replace github.com/acorn-io/cmd => ../cmd
-
 require (
-	github.com/acorn-io/cmd v0.0.0-20231020234559-285455daa0d8
+	github.com/acorn-io/cmd v0.0.0-20240101193821-66a32bc6b939
 	github.com/cosmtrek/air v1.49.0
 	github.com/ramr/go-reaper v0.2.1
 	github.com/spf13/cobra v1.7.0
