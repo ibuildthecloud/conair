@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"os/exec"
@@ -25,7 +24,7 @@ func Run(ctx context.Context, args []string, opt Options) error {
 		return err
 	}
 
-	if _, err := exec.LookPath("dlv"); errors.Is(err, fs.ErrNotExist) {
+	if _, err := exec.LookPath("dlv"); errors.Is(err, exec.ErrNotFound) {
 		cmd := exec.Command("go", "install", "github.com/go-delve/delve/cmd/dlv@latest")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
