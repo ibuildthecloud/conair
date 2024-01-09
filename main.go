@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/acorn-io/cmd"
 	"github.com/ibuildthecloud/conair/pkg/cli"
-	"github.com/ramr/go-reaper"
+	"github.com/ibuildthecloud/conair/pkg/reaper"
 )
 
 func main() {
-	go reaper.Reap()
+	reaper.Start()
 	cmd.Main(cli.New())
 }
