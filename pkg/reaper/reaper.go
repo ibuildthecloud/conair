@@ -1,6 +1,8 @@
 package reaper
 
 import (
+	"errors"
+	"io/fs"
 	"syscall"
 	"time"
 
@@ -14,8 +16,8 @@ func Start() {
 
 	go func() {
 		for {
-			if err := killDLV(); err != nil {
-				logrus.Error("failed to find and terminate stall dlv: %v", err)
+			if err := killDLV(); err != nil && !errors.Is(err, fs.ErrNotExist) {
+				logrus.Errorf("failed to find and terminate stale dlv: %v", err)
 			}
 			time.Sleep(1 * time.Second)
 		}
@@ -60,6 +62,8 @@ func killDLV() error {
 				return nil
 			}
 		}
+
+		time.Sleep(time.Second)
 	}
 
 	logrus.Infof("Killing dlv: %d", dlvPid)
