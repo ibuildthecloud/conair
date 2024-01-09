@@ -44,7 +44,7 @@ func killDLV() error {
 		return nil
 	}
 
-	time.Sleep(3 * time.Second)
+	time.Sleep(8 * time.Second)
 
 	procs, err = procfs.AllProcs()
 	if err != nil {
