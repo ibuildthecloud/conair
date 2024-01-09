@@ -42,7 +42,7 @@ func killDLV() error {
 		return nil
 	}
 
-	time.Sleep(3 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	procs, err = procfs.AllProcs()
 	if err != nil {
@@ -55,10 +55,11 @@ func killDLV() error {
 			return err
 		}
 
-		if ps.PID == dlvPid {
+		if ps.PPID == dlvPid {
 			return nil
 		}
 	}
 
+	logrus.Infof("Killing dlv: %d", dlvPid)
 	return syscall.Kill(dlvPid, syscall.SIGTERM)
 }
