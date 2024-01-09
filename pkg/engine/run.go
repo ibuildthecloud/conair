@@ -15,6 +15,7 @@ import (
 )
 
 type Options struct {
+	DebugStop bool   `usage:"Stop the program on start waiting for a debugger to attach"`
 	AirConfig string `usage:"air config to override defaults" short:"c"`
 }
 
@@ -35,7 +36,7 @@ func Run(ctx context.Context, args []string, opt Options) error {
 		return err
 	}
 
-	if err := setDefaults(cfg, args); err != nil {
+	if err := setDefaults(cfg, opt.DebugStop, args); err != nil {
 		return err
 	}
 
@@ -64,7 +65,7 @@ func setIfEmpty[T comparable](currentValue, newValue T) T {
 	return currentValue
 }
 
-func setDefaults(cfg *runner.Config, args []string) error {
+func setDefaults(cfg *runner.Config, debugStop bool, args []string) error {
 	tmp, err := os.MkdirTemp("", "air-run")
 	if err != nil {
 		return err
@@ -98,7 +99,11 @@ func setDefaults(cfg *runner.Config, args []string) error {
 	bin := filepath.Join(tmp, "main")
 	cmd := fmt.Sprintf("go build -o %s %s", bin, strings.Join(targets, " "))
 	log := filepath.Join(tmp, "build-errors.log")
-	fullBin := fmt.Sprintf("dlv exec --continue --accept-multiclient --listen=:2345 --headless=true --api-version=2 --log %s --", bin)
+	debugContinue := "--continue "
+	if debugStop {
+		debugContinue = ""
+	}
+	fullBin := fmt.Sprintf("dlv exec %s--accept-multiclient --listen=:2345 --headless=true --api-version=2 --log %s --", debugContinue, bin)
 
 	cfg.Build.ArgsBin = setSliceIfEmpty(cfg.Build.ArgsBin, argsBin)
 	cfg.Build.Bin = fullBin
