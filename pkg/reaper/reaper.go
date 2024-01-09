@@ -23,31 +23,28 @@ func Start() {
 }
 
 func killDLV() error {
-	sleep := 8 * time.Second
-	for {
-		procs, err := procfs.AllProcs()
+	procs, err := procfs.AllProcs()
+	if err != nil {
+		return err
+	}
+
+	var dlvPid int
+	for _, proc := range procs {
+		cl, err := proc.CmdLine()
 		if err != nil {
 			return err
 		}
-
-		var dlvPid int
-		for _, proc := range procs {
-			cl, err := proc.CmdLine()
-			if err != nil {
-				return err
-			}
-			if len(cl) > 2 && cl[0] == "dlv" && cl[1] == "exec" {
-				dlvPid = proc.PID
-				break
-			}
+		if len(cl) > 2 && cl[0] == "dlv" && cl[1] == "exec" {
+			dlvPid = proc.PID
+			break
 		}
+	}
 
-		if dlvPid == 0 {
-			return nil
-		}
+	if dlvPid == 0 {
+		return nil
+	}
 
-		time.Sleep(sleep)
-
+	for i := 0; i < 10; i++ {
 		procs, err = procfs.AllProcs()
 		if err != nil {
 			return err
@@ -63,12 +60,8 @@ func killDLV() error {
 				return nil
 			}
 		}
-
-		if sleep == 0 {
-			logrus.Infof("Killing dlv: %d", dlvPid)
-			return syscall.Kill(dlvPid, syscall.SIGTERM)
-		} else {
-			sleep = 0
-		}
 	}
+
+	logrus.Infof("Killing dlv: %d", dlvPid)
+	return syscall.Kill(dlvPid, syscall.SIGTERM)
 }
