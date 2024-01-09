@@ -12,12 +12,14 @@ import (
 func Start() {
 	go reaper.Reap()
 
-	for {
-		if err := killDLV(); err != nil {
-			logrus.Error("failed to find and terminate stall dlv: %v", err)
+	go func() {
+		for {
+			if err := killDLV(); err != nil {
+				logrus.Error("failed to find and terminate stall dlv: %v", err)
+			}
+			time.Sleep(1 * time.Second)
 		}
-		time.Sleep(1 * time.Second)
-	}
+	}()
 }
 
 func killDLV() error {
@@ -42,7 +44,7 @@ func killDLV() error {
 		return nil
 	}
 
-	time.Sleep(10 * time.Second)
+	time.Sleep(3 * time.Second)
 
 	procs, err = procfs.AllProcs()
 	if err != nil {
