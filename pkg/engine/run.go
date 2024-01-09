@@ -101,18 +101,14 @@ func setDefaults(cfg *runner.Config, args []string) error {
 	fullBin := fmt.Sprintf("dlv exec --continue --accept-multiclient --listen=:2345 --headless=true --api-version=2 --log %s --", bin)
 
 	cfg.Build.ArgsBin = setSliceIfEmpty(cfg.Build.ArgsBin, argsBin)
-	cfg.Build.Bin = setIfEmpty(cfg.Build.Bin, bin)
-	cfg.Build.Cmd = setIfEmpty(cfg.Build.Cmd, cmd)
-	cfg.Build.Delay = setIfEmpty(cfg.Build.Delay, 1000)
-	cfg.Build.ExcludeDir = setSliceIfEmpty(cfg.Build.ExcludeDir, []string{"assets", "tmp", "testdata"})
-	cfg.Build.ExcludeRegex = setSliceIfEmpty(cfg.Build.ExcludeDir, []string{"_test.go"})
-	cfg.Build.FullBin = setIfEmpty(cfg.Build.FullBin, fullBin)
+	cfg.Build.Bin = fullBin
+	cfg.Build.Cmd = cmd
 	cfg.Build.KillDelay = setIfEmpty(cfg.Build.KillDelay, time.Second)
-	cfg.Build.Log = setIfEmpty(cfg.Build.Log, log)
+	cfg.Build.Log = log
 	cfg.Build.SendInterrupt = true
 	cfg.Build.StopOnError = true
 	cfg.Build.Rerun = true
-	cfg.Build.RerunDelay = setIfEmpty(cfg.Build.RerunDelay, 5000)
+	cfg.Build.RerunDelay = 5000
 
 	return nil
 }
