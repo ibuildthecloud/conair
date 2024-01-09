@@ -97,7 +97,7 @@ func setDefaults(cfg *runner.Config, debugStop bool, args []string) error {
 	}
 
 	bin := filepath.Join(tmp, "main")
-	cmd := fmt.Sprintf("go build -o %s %s", bin, strings.Join(targets, " "))
+	cmd := fmt.Sprintf("go build -gcflags \"all=-N -l\" -o %s %s", bin, strings.Join(targets, " "))
 	log := filepath.Join(tmp, "build-errors.log")
 	debugContinue := "--continue "
 	if debugStop {
